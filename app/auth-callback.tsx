@@ -55,7 +55,7 @@ export default function AuthCallbackScreen() {
   if (status === 'loading') {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#F97316" />
+        <ActivityIndicator size="large" color="#FF6B00" />
         <Text style={styles.message}>Confirmation de votre compte en cours...</Text>
       </View>
     )
@@ -66,19 +66,19 @@ export default function AuthCallbackScreen() {
       {status === 'success' ? (
         <>
           <Text style={styles.successIcon}>✅</Text>
-          <Text style={styles.title}>Compte confirmé !</Text>
+          <Text style={styles.title}>COMPTE CONFIRMÉ !</Text>
           <Text style={styles.message}>{message}</Text>
         </>
       ) : (
         <>
           <Text style={styles.errorIcon}>❌</Text>
-          <Text style={styles.title}>Erreur</Text>
+          <Text style={styles.title}>ERREUR</Text>
           <Text style={styles.message}>{message}</Text>
           <TouchableOpacity
             style={styles.button}
             onPress={() => router.replace('/login')}
           >
-            <Text style={styles.buttonText}>Retour à la connexion</Text>
+            <Text style={styles.buttonText}>RETOUR À LA CONNEXION</Text>
           </TouchableOpacity>
         </>
       )}
@@ -89,7 +89,7 @@ export default function AuthCallbackScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101828',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
     paddingHorizontal: 32,
@@ -104,28 +104,38 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '900',
+    color: '#000000',
     marginBottom: 16,
     textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   message: {
     fontSize: 16,
-    color: '#D0D5DD',
+    color: '#666666',
     textAlign: 'center',
     marginBottom: 32,
+    fontWeight: '500',
   },
   button: {
-    backgroundColor: '#F97316',
+    backgroundColor: '#FF6B00',
+    borderWidth: 3,
+    borderColor: '#000000',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
     marginTop: 16,
   },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
 })
-

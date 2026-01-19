@@ -92,7 +92,7 @@ export default function ProfileScreen() {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#F97316" />
+        <ActivityIndicator size="large" color="#FF6B00" />
       </View>
     )
   }
@@ -100,12 +100,12 @@ export default function ProfileScreen() {
   return (
     <ScrollView style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Mon Profil</Text>
+        <Text style={styles.title}>MON PROFIL</Text>
       </View>
 
       <View style={styles.profileSection}>
         <View style={styles.avatar}>
-          <Ionicons name="person" size={40} color="#F97316" />
+          <Ionicons name="person" size={40} color="#FF6B00" />
         </View>
         {user && (
           <Text style={styles.email}>{user.email}</Text>
@@ -113,7 +113,7 @@ export default function ProfileScreen() {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Statistiques</Text>
+        <Text style={styles.sectionTitle}>STATISTIQUES</Text>
         <View style={styles.statsContainer}>
           <View style={styles.statCard}>
             <Text style={styles.statNumber}>{usedOffers.length}</Text>
@@ -127,10 +127,10 @@ export default function ProfileScreen() {
       </View>
 
       <View style={styles.section}>
-        <Text style={styles.sectionTitle}>Historique</Text>
+        <Text style={styles.sectionTitle}>HISTORIQUE</Text>
         {usedOffers.length === 0 ? (
           <View style={styles.emptyContainer}>
-            <Ionicons name="receipt-outline" size={48} color="#9CA3AF" />
+            <Ionicons name="receipt-outline" size={48} color="#666666" />
             <Text style={styles.emptyText}>Aucune offre utilisée</Text>
             <Text style={styles.emptySubtext}>
               Vos offres utilisées apparaîtront ici
@@ -159,24 +159,24 @@ export default function ProfileScreen() {
 
       <View style={styles.section}>
         <TouchableOpacity style={styles.menuItem}>
-          <Ionicons name="settings-outline" size={24} color="#FFFFFF" />
+          <Ionicons name="settings-outline" size={24} color="#000000" />
           <Text style={styles.menuText}>Paramètres</Text>
-          <Ionicons name="chevron-forward" size={24} color="#9CA3AF" />
+          <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem}>
-          <Ionicons name="help-circle-outline" size={24} color="#FFFFFF" />
+          <Ionicons name="help-circle-outline" size={24} color="#000000" />
           <Text style={styles.menuText}>Aide & Support</Text>
-          <Ionicons name="chevron-forward" size={24} color="#9CA3AF" />
+          <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
         <TouchableOpacity style={styles.menuItem}>
-          <Ionicons name="document-text-outline" size={24} color="#FFFFFF" />
+          <Ionicons name="document-text-outline" size={24} color="#000000" />
           <Text style={styles.menuText}>Conditions d'utilisation</Text>
-          <Ionicons name="chevron-forward" size={24} color="#9CA3AF" />
+          <Ionicons name="chevron-forward" size={24} color="#666666" />
         </TouchableOpacity>
       </View>
 
       <TouchableOpacity style={styles.logoutButton} onPress={handleLogout}>
-        <Text style={styles.logoutButtonText}>Déconnexion</Text>
+        <Text style={styles.logoutButtonText}>DÉCONNEXION</Text>
       </TouchableOpacity>
     </ScrollView>
   )
@@ -185,11 +185,11 @@ export default function ProfileScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101828',
+    backgroundColor: '#FFFFFF',
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: '#101828',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -200,27 +200,37 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '900',
+    color: '#000000',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   profileSection: {
     alignItems: 'center',
     paddingVertical: 32,
-    borderBottomWidth: 1,
-    borderBottomColor: '#374151',
+    borderBottomWidth: 3,
+    borderBottomColor: '#000000',
   },
   avatar: {
     width: 80,
     height: 80,
     borderRadius: 40,
-    backgroundColor: '#1F2937',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   email: {
     fontSize: 16,
-    color: '#D0D5DD',
+    color: '#666666',
+    fontWeight: '500',
   },
   section: {
     paddingHorizontal: 16,
@@ -228,9 +238,11 @@ const styles = StyleSheet.create({
   },
   sectionTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '900',
+    color: '#000000',
     marginBottom: 16,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   statsContainer: {
     flexDirection: 'row',
@@ -238,20 +250,27 @@ const styles = StyleSheet.create({
   },
   statCard: {
     flex: 1,
-    backgroundColor: '#1F2937',
-    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     padding: 16,
     alignItems: 'center',
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   statNumber: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#F97316',
+    fontWeight: '900',
+    color: '#FF6B00',
     marginBottom: 4,
   },
   statLabel: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: '#666666',
+    fontWeight: '600',
   },
   emptyContainer: {
     alignItems: 'center',
@@ -259,20 +278,27 @@ const styles = StyleSheet.create({
   },
   emptyText: {
     fontSize: 16,
-    color: '#FFFFFF',
+    color: '#000000',
     marginTop: 16,
+    fontWeight: '600',
   },
   emptySubtext: {
     fontSize: 14,
-    color: '#9CA3AF',
+    color: '#666666',
     marginTop: 8,
     textAlign: 'center',
   },
   historyCard: {
-    backgroundColor: '#1F2937',
-    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     padding: 16,
     marginBottom: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   historyHeader: {
     flexDirection: 'row',
@@ -282,46 +308,58 @@ const styles = StyleSheet.create({
   },
   historyTitle: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#FFFFFF',
+    fontWeight: '700',
+    color: '#000000',
     flex: 1,
   },
   historyDate: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: '#666666',
   },
   historyRestaurant: {
     fontSize: 14,
-    color: '#D0D5DD',
+    color: '#666666',
   },
   menuItem: {
     flexDirection: 'row',
     alignItems: 'center',
-    backgroundColor: '#1F2937',
-    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     padding: 16,
     marginBottom: 12,
     gap: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   menuText: {
     flex: 1,
     fontSize: 16,
-    color: '#FFFFFF',
+    color: '#000000',
+    fontWeight: '600',
   },
   logoutButton: {
-    backgroundColor: '#1F2937',
-    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#EF4444',
     padding: 16,
     marginHorizontal: 16,
     marginBottom: 32,
     alignItems: 'center',
-    borderWidth: 1,
-    borderColor: '#EF4444',
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   logoutButtonText: {
     color: '#EF4444',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
 })
-

@@ -112,8 +112,8 @@ export default function ScannerScreen() {
     return (
       <View style={styles.container}>
         <View style={styles.expoGoContainer}>
-          <Ionicons name="qr-code-outline" size={80} color="#F97316" />
-          <Text style={styles.expoGoTitle}>Scanner QR Code</Text>
+          <Ionicons name="qr-code-outline" size={80} color="#FF6B00" />
+          <Text style={styles.expoGoTitle}>SCANNER QR CODE</Text>
           <Text style={styles.expoGoMessage}>
             Le scanner de QR code nécessite un build natif et ne fonctionne pas avec Expo Go.
           </Text>
@@ -141,7 +141,7 @@ export default function ScannerScreen() {
               )
             }}
           >
-            <Text style={styles.infoButtonText}>En savoir plus</Text>
+            <Text style={styles.infoButtonText}>EN SAVOIR PLUS</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -151,7 +151,7 @@ export default function ScannerScreen() {
   if (hasPermission === null) {
     return (
       <View style={styles.container}>
-        <ActivityIndicator size="large" color="#F97316" />
+        <ActivityIndicator size="large" color="#FF6B00" />
         <Text style={styles.message}>Demande d'autorisation caméra...</Text>
       </View>
     )
@@ -160,13 +160,13 @@ export default function ScannerScreen() {
   if (hasPermission === false) {
     return (
       <View style={styles.container}>
-        <Ionicons name="camera-outline" size={80} color="#9CA3AF" />
+        <Ionicons name="camera-outline" size={80} color="#666666" />
         <Text style={styles.message}>Accès à la caméra refusé</Text>
         <Text style={styles.subMessage}>
           Veuillez autoriser l'accès à la caméra dans les paramètres de l'application
         </Text>
         <TouchableOpacity style={styles.button} onPress={requestCameraPermission}>
-          <Text style={styles.buttonText}>Autoriser la caméra</Text>
+          <Text style={styles.buttonText}>AUTORISER LA CAMÉRA</Text>
         </TouchableOpacity>
       </View>
     )
@@ -175,7 +175,7 @@ export default function ScannerScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Scanner un QR Code</Text>
+        <Text style={styles.title}>SCANNER UN QR CODE</Text>
         <Text style={styles.subtitle}>Pointez la caméra vers le QR Code d'une offre</Text>
       </View>
 
@@ -199,7 +199,7 @@ export default function ScannerScreen() {
 
         {loading && (
           <View style={styles.loadingOverlay}>
-            <ActivityIndicator size="large" color="#F97316" />
+            <ActivityIndicator size="large" color="#FF6B00" />
             <Text style={styles.loadingText}>Validation en cours...</Text>
           </View>
         )}
@@ -214,7 +214,7 @@ export default function ScannerScreen() {
             style={styles.scanAgainButton}
             onPress={() => setScanned(false)}
           >
-            <Text style={styles.scanAgainText}>Scanner à nouveau</Text>
+            <Text style={styles.scanAgainText}>SCANNER À NOUVEAU</Text>
           </TouchableOpacity>
         )}
       </View>
@@ -228,7 +228,7 @@ const scanAreaSize = width * 0.7
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101828',
+    backgroundColor: '#FFFFFF',
     paddingTop: 60,
   },
   expoGoContainer: {
@@ -239,59 +239,76 @@ const styles = StyleSheet.create({
   },
   expoGoTitle: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '900',
+    color: '#000000',
     marginTop: 24,
     marginBottom: 16,
     textAlign: 'center',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   expoGoMessage: {
     fontSize: 16,
-    color: '#FFFFFF',
+    color: '#000000',
     textAlign: 'center',
     marginBottom: 12,
     lineHeight: 24,
+    fontWeight: '500',
   },
   expoGoSubMessage: {
     fontSize: 14,
-    color: '#F97316',
+    color: '#FF6B00',
     textAlign: 'center',
     marginBottom: 24,
-    fontWeight: '600',
+    fontWeight: '700',
+    textTransform: 'uppercase',
   },
   instructions: {
-    backgroundColor: '#1F2937',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     padding: 20,
-    borderRadius: 12,
     marginBottom: 24,
     width: '100%',
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   instructionText: {
     fontSize: 14,
-    color: '#D0D5DD',
+    color: '#000000',
     marginBottom: 12,
     lineHeight: 20,
+    fontWeight: '500',
   },
   codeText: {
     fontFamily: Platform.OS === 'ios' ? 'Menlo' : 'monospace',
-    backgroundColor: '#374151',
+    backgroundColor: '#000000',
     paddingHorizontal: 6,
     paddingVertical: 2,
-    borderRadius: 4,
-    color: '#F97316',
+    color: '#FFFFFF',
+    fontWeight: '700',
   },
   infoButton: {
-    backgroundColor: '#1F2937',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#F97316',
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   infoButtonText: {
-    color: '#F97316',
+    color: '#FF6B00',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   header: {
     paddingHorizontal: 16,
@@ -300,13 +317,15 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '900',
+    color: '#000000',
     marginBottom: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   subtitle: {
     fontSize: 14,
-    color: '#9CA3AF',
+    color: '#666666',
     textAlign: 'center',
   },
   scannerContainer: {
@@ -334,7 +353,7 @@ const styles = StyleSheet.create({
     position: 'absolute',
     width: 30,
     height: 30,
-    borderColor: '#F97316',
+    borderColor: '#FF6B00',
   },
   topLeft: {
     top: 0,
@@ -370,6 +389,7 @@ const styles = StyleSheet.create({
     color: '#FFFFFF',
     marginTop: 16,
     fontSize: 16,
+    fontWeight: '600',
   },
   footer: {
     paddingHorizontal: 16,
@@ -377,44 +397,59 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   footerText: {
-    color: '#9CA3AF',
+    color: '#666666',
     fontSize: 14,
     textAlign: 'center',
     marginBottom: 16,
   },
   button: {
-    backgroundColor: '#F97316',
+    backgroundColor: '#FF6B00',
+    borderWidth: 3,
+    borderColor: '#000000',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 12,
     marginTop: 24,
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   buttonText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   scanAgainButton: {
-    backgroundColor: '#1F2937',
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 12,
-    borderWidth: 1,
-    borderColor: '#F97316',
+    shadowColor: '#000000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   scanAgainText: {
-    color: '#F97316',
+    color: '#FF6B00',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   message: {
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 18,
     marginTop: 24,
     textAlign: 'center',
+    fontWeight: '600',
   },
   subMessage: {
-    color: '#9CA3AF',
+    color: '#666666',
     fontSize: 14,
     marginTop: 12,
     textAlign: 'center',

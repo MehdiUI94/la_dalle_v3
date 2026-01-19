@@ -112,7 +112,7 @@ export default function OffersScreen() {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#F97316" />
+        <ActivityIndicator size="large" color="#FF6B00" />
         <Text style={styles.loadingText}>Chargement des offres...</Text>
       </View>
     )
@@ -121,14 +121,14 @@ export default function OffersScreen() {
   return (
     <View style={styles.container}>
       <View style={styles.header}>
-        <Text style={styles.title}>Toutes les offres</Text>
+        <Text style={styles.title}>TOUTES LES OFFRES</Text>
       </View>
 
       <View style={styles.searchContainer}>
         <TextInput
           style={styles.searchInput}
           placeholder="Rechercher une offre..."
-          placeholderTextColor="#9CA3AF"
+          placeholderTextColor="#666666"
           value={searchQuery}
           onChangeText={setSearchQuery}
         />
@@ -140,7 +140,7 @@ export default function OffersScreen() {
           onPress={() => setSelectedFilter('all')}
         >
           <Text style={[styles.filterText, selectedFilter === 'all' && styles.filterTextActive]}>
-            Toutes
+            TOUTES
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -150,7 +150,7 @@ export default function OffersScreen() {
           <Text
             style={[styles.filterText, selectedFilter === 'one_shot' && styles.filterTextActive]}
           >
-            One Shot
+            ONE SHOT
           </Text>
         </TouchableOpacity>
         <TouchableOpacity
@@ -160,7 +160,7 @@ export default function OffersScreen() {
           <Text
             style={[styles.filterText, selectedFilter === 'permanent' && styles.filterTextActive]}
           >
-            Permanentes
+            PERMANENTES
           </Text>
         </TouchableOpacity>
       </View>
@@ -183,11 +183,11 @@ export default function OffersScreen() {
                     {offer.type === 'one_shot' ? '🎁' : '⭐'}
                   </Text>
                   <Text style={styles.offerTypeLabel}>
-                    {offer.type === 'one_shot' ? 'One Shot' : 'Permanente'}
+                    {offer.type === 'one_shot' ? 'ONE SHOT' : 'PERMANENTE'}
                   </Text>
                 </View>
               </View>
-              <Text style={styles.offerTitle}>{offer.title}</Text>
+              <Text style={styles.offerTitle}>{offer.title.toUpperCase()}</Text>
               {offer.description && (
                 <Text style={styles.offerDescription} numberOfLines={2}>
                   {offer.description}
@@ -195,9 +195,9 @@ export default function OffersScreen() {
               )}
               {offer.restaurant && (
                 <View style={styles.restaurantInfo}>
-                  <Text style={styles.restaurantName}>{offer.restaurant.name}</Text>
+                  <Text style={styles.restaurantName}>{offer.restaurant.name.toUpperCase()}</Text>
                   {offer.restaurant.cuisine_type && (
-                    <Text style={styles.restaurantCuisine}>{offer.restaurant.cuisine_type}</Text>
+                    <Text style={styles.restaurantCuisine}>{offer.restaurant.cuisine_type.toUpperCase()}</Text>
                   )}
                   <Text style={styles.restaurantAddress}>📍 {offer.restaurant.address}</Text>
                 </View>
@@ -213,19 +213,20 @@ export default function OffersScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101828',
+    backgroundColor: '#FFFFFF',
     paddingTop: 60,
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: '#101828',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   loadingText: {
-    color: '#FFFFFF',
+    color: '#000000',
     marginTop: 16,
     fontSize: 16,
+    fontWeight: '600',
   },
   header: {
     paddingHorizontal: 16,
@@ -233,21 +234,27 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 32,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '900',
+    color: '#000000',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   searchContainer: {
     paddingHorizontal: 16,
     marginBottom: 16,
   },
   searchInput: {
-    backgroundColor: '#1F2937',
-    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     padding: 16,
     fontSize: 16,
-    color: '#FFFFFF',
-    borderWidth: 1,
-    borderColor: '#374151',
+    color: '#000000',
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   filterContainer: {
     flexDirection: 'row',
@@ -258,19 +265,23 @@ const styles = StyleSheet.create({
   filterButton: {
     paddingHorizontal: 16,
     paddingVertical: 8,
-    borderRadius: 20,
-    backgroundColor: '#1F2937',
-    borderWidth: 1,
-    borderColor: '#374151',
+    borderWidth: 3,
+    borderColor: '#000000',
+    backgroundColor: '#FFFFFF',
+    shadowColor: '#000000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   filterButtonActive: {
-    backgroundColor: '#F97316',
-    borderColor: '#F97316',
+    backgroundColor: '#FF6B00',
   },
   filterText: {
-    color: '#9CA3AF',
+    color: '#000000',
     fontSize: 14,
-    fontWeight: '600',
+    fontWeight: '700',
+    textTransform: 'uppercase',
   },
   filterTextActive: {
     color: '#FFFFFF',
@@ -283,12 +294,16 @@ const styles = StyleSheet.create({
     paddingBottom: 100,
   },
   offerCard: {
-    backgroundColor: '#1F2937',
-    borderRadius: 12,
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     padding: 16,
     marginBottom: 16,
-    borderWidth: 1,
-    borderColor: '#374151',
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   offerHeader: {
     flexDirection: 'row',
@@ -305,42 +320,46 @@ const styles = StyleSheet.create({
     fontSize: 16,
   },
   offerTypeLabel: {
-    color: '#F97316',
+    color: '#FF6B00',
     fontSize: 12,
-    fontWeight: '600',
+    fontWeight: '700',
+    textTransform: 'uppercase',
   },
   offerTitle: {
     fontSize: 20,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '900',
+    color: '#000000',
     marginBottom: 8,
+    letterSpacing: 0.5,
   },
   offerDescription: {
     fontSize: 14,
-    color: '#D0D5DD',
+    color: '#666666',
     marginBottom: 12,
     lineHeight: 20,
   },
   restaurantInfo: {
     marginTop: 12,
     paddingTop: 12,
-    borderTopWidth: 1,
-    borderTopColor: '#374151',
+    borderTopWidth: 2,
+    borderTopColor: '#000000',
   },
   restaurantName: {
     fontSize: 16,
-    fontWeight: '600',
-    color: '#FFFFFF',
+    fontWeight: '700',
+    color: '#000000',
     marginBottom: 4,
+    letterSpacing: 0.5,
   },
   restaurantCuisine: {
     fontSize: 14,
-    color: '#F97316',
+    color: '#FF6B00',
     marginBottom: 4,
+    fontWeight: '600',
   },
   restaurantAddress: {
     fontSize: 12,
-    color: '#9CA3AF',
+    color: '#666666',
   },
   emptyContainer: {
     flex: 1,
@@ -349,8 +368,8 @@ const styles = StyleSheet.create({
     paddingVertical: 60,
   },
   emptyText: {
-    color: '#9CA3AF',
+    color: '#666666',
     fontSize: 16,
+    fontWeight: '600',
   },
 })
-

@@ -17,9 +17,6 @@ import {
 } from 'react-native'
 import { supabase } from '../config/supabase'
 
-// Fermer le WebBrowser quand il se ferme automatiquement
-// WebBrowser.maybeCompleteAuthSession() // This line is removed as per the new_code, as the OAuth flow is no longer directly used.
-
 // Fonction pour traduire les messages d'erreur Supabase en français
 function translateError(errorMessage: string): string {
   const errorTranslations: { [key: string]: string } = {
@@ -114,6 +111,27 @@ export default function LoginScreen() {
       Alert.alert('Erreur', 'Une erreur est survenue lors de l\'envoi de l\'email')
     } finally {
       setResendLoading(false)
+    }
+  }
+
+  async function handleQuickLogin() {
+    // Connexion rapide sans authentification
+    setLoading(true)
+    
+    try {
+      const { data, error } = await supabase.auth.signInAnonymously()
+      
+      if (error) {
+        console.log('Auth anonyme non disponible, accès direct')
+        router.replace('/(tabs)')
+      } else {
+        router.replace('/(tabs)')
+      }
+    } catch (error: any) {
+      console.log('Erreur auth anonyme:', error)
+      router.replace('/(tabs)')
+    } finally {
+      setLoading(false)
     }
   }
 
@@ -372,7 +390,7 @@ export default function LoginScreen() {
 
             <TouchableOpacity
               style={[styles.button, (loading || resendLoading) && styles.buttonDisabled]}
-              onPress={handleAuth}
+              onPress={handleQuickLogin}
               disabled={loading || resendLoading}
               activeOpacity={0.9}
             >
@@ -380,9 +398,20 @@ export default function LoginScreen() {
                 <ActivityIndicator color="#FFFFFF" />
               ) : (
                 <Text style={styles.buttonText}>
-                  {isSignUp ? "S'INSCRIRE 🚀" : 'SE CONNECTER 🔥'}
+                  SE CONNECTER 🔥
                 </Text>
               )}
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              style={[styles.buttonSecondary, (loading || resendLoading || !email || !password) && styles.buttonDisabled]}
+              onPress={handleAuth}
+              disabled={loading || resendLoading || !email || !password}
+              activeOpacity={0.9}
+            >
+              <Text style={styles.buttonSecondaryText}>
+                {isSignUp ? "S'INSCRIRE 🚀" : 'CONNEXION AVEC EMAIL'}
+              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -540,11 +569,31 @@ const styles = StyleSheet.create({
     shadowRadius: 0,
     elevation: 0,
   },
+  buttonSecondary: {
+    backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
+    padding: 18,
+    alignItems: 'center',
+    marginTop: 16,
+    shadowColor: '#000000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
+  },
   buttonDisabled: {
     opacity: 0.6,
   },
   buttonText: {
     color: '#FFFFFF',
+    fontSize: 18,
+    fontWeight: '900',
+    letterSpacing: 1,
+    textTransform: 'uppercase',
+  },
+  buttonSecondaryText: {
+    color: '#000000',
     fontSize: 18,
     fontWeight: '900',
     letterSpacing: 1,

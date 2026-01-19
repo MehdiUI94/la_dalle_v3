@@ -3,12 +3,12 @@ import { useEffect, useState } from 'react'
 import {
   ActivityIndicator,
   Alert,
+  Platform,
   StyleSheet,
   Text,
   TouchableOpacity,
   View,
 } from 'react-native'
-import QRCode from 'react-native-qrcode-svg'
 import { supabase } from '../config/supabase'
 
 export default function QrCodeScreen() {
@@ -20,11 +20,24 @@ export default function QrCodeScreen() {
   const [qrData, setQrData] = useState<string | null>(null)
   const [loading, setLoading] = useState(true)
   const [offerTitle, setOfferTitle] = useState<string>('')
+  const [QRCodeComponent, setQRCodeComponent] = useState<React.ComponentType<{value: string, size?: number}> | null>(null)
 
   useEffect(() => {
     if (offerId && restaurantId) {
       generateQrCode()
       loadOfferDetails()
+    }
+    
+    // Charger le composant QR Code uniquement sur les plateformes natives
+    // Sur le web, ce code ne sera jamais exécuté car qr-code.web.tsx est utilisé
+    if (Platform.OS !== 'web') {
+      // Utiliser require avec try/catch pour éviter les erreurs
+      try {
+        const QRCodeNative = require('../components/qr-code-native').default
+        setQRCodeComponent(() => QRCodeNative)
+      } catch (error) {
+        console.warn('QR Code component not available:', error)
+      }
     }
   }, [offerId, restaurantId])
 
@@ -76,7 +89,7 @@ export default function QrCodeScreen() {
   if (loading) {
     return (
       <View style={styles.loadingContainer}>
-        <ActivityIndicator size="large" color="#F97316" />
+        <ActivityIndicator size="large" color="#FF6B00" />
         <Text style={styles.loadingText}>Génération du QR Code...</Text>
       </View>
     )
@@ -87,7 +100,7 @@ export default function QrCodeScreen() {
       <View style={styles.container}>
         <Text style={styles.errorText}>Erreur lors de la génération</Text>
         <TouchableOpacity style={styles.backButton} onPress={() => router.back()}>
-          <Text style={styles.backButtonText}>Retour</Text>
+          <Text style={styles.backButtonText}>RETOUR</Text>
         </TouchableOpacity>
       </View>
     )
@@ -96,22 +109,35 @@ export default function QrCodeScreen() {
   return (
     <View style={styles.container}>
       <TouchableOpacity style={styles.closeButton} onPress={() => router.back()}>
-        <Text style={styles.closeButtonText}>✕ Fermer</Text>
+        <Text style={styles.closeButtonText}>✕ FERMER</Text>
       </TouchableOpacity>
 
       <View style={styles.content}>
-        <Text style={styles.title}>Votre QR Code</Text>
-        {offerTitle && <Text style={styles.offerTitle}>{offerTitle}</Text>}
+        <Text style={styles.title}>VOTRE QR CODE</Text>
+        {offerTitle && <Text style={styles.offerTitle}>{offerTitle.toUpperCase()}</Text>}
 
-        <View style={styles.qrContainer}>
-          <QRCode
-            value={qrData}
-            size={250}
-            color="#000000"
-            backgroundColor="#FFFFFF"
-            logoSize={0}
-          />
-        </View>
+        {Platform.OS === 'web' ? (
+          <View style={styles.webFallback}>
+            <Text style={styles.webFallbackText}>
+              La génération de QR Code n'est pas disponible sur le web.
+            </Text>
+            <Text style={styles.webFallbackText}>
+              Utilisez l'application mobile pour générer votre QR Code.
+            </Text>
+            <View style={styles.qrDataBox}>
+              <Text style={styles.qrDataLabel}>Données du QR Code:</Text>
+              <Text style={styles.qrDataText}>{qrData}</Text>
+            </View>
+          </View>
+        ) : QRCodeComponent ? (
+          <QRCodeComponent value={qrData} size={250} />
+        ) : (
+          <View style={styles.webFallback}>
+            <Text style={styles.webFallbackText}>
+              Chargement du QR Code...
+            </Text>
+          </View>
+        )}
 
         <Text style={styles.instruction}>
           Présentez ce QR Code au restaurateur pour utiliser votre offre
@@ -130,28 +156,31 @@ export default function QrCodeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#101828',
+    backgroundColor: '#FFFFFF',
     paddingTop: 60,
   },
   loadingContainer: {
     flex: 1,
-    backgroundColor: '#101828',
+    backgroundColor: '#FFFFFF',
     justifyContent: 'center',
     alignItems: 'center',
   },
   loadingText: {
-    color: '#FFFFFF',
+    color: '#000000',
     marginTop: 16,
     fontSize: 16,
+    fontWeight: '600',
   },
   closeButton: {
     alignSelf: 'flex-end',
     padding: 16,
   },
   closeButtonText: {
-    color: '#F97316',
+    color: '#FF6B00',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   content: {
     flex: 1,
@@ -160,61 +189,110 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 28,
-    fontWeight: 'bold',
-    color: '#FFFFFF',
+    fontWeight: '900',
+    color: '#000000',
     marginBottom: 8,
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
   offerTitle: {
     fontSize: 18,
-    color: '#F97316',
+    color: '#FF6B00',
     marginBottom: 32,
     textAlign: 'center',
+    fontWeight: '700',
   },
-  qrContainer: {
+  webFallback: {
     backgroundColor: '#FFFFFF',
+    borderWidth: 3,
+    borderColor: '#000000',
     padding: 20,
-    borderRadius: 16,
     marginBottom: 24,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5,
+    width: '100%',
+    maxWidth: 300,
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
+  },
+  webFallbackText: {
+    fontSize: 14,
+    color: '#000000',
+    textAlign: 'center',
+    marginBottom: 12,
+    fontWeight: '500',
+  },
+  qrDataBox: {
+    marginTop: 16,
+    padding: 12,
+    backgroundColor: '#F0F0F0',
+    borderWidth: 2,
+    borderColor: '#000000',
+  },
+  qrDataLabel: {
+    fontSize: 12,
+    fontWeight: '700',
+    color: '#000000',
+    marginBottom: 8,
+    textTransform: 'uppercase',
+  },
+  qrDataText: {
+    fontSize: 10,
+    color: '#666666',
+    fontFamily: 'monospace',
   },
   instruction: {
     fontSize: 16,
-    color: '#D0D5DD',
+    color: '#666666',
     textAlign: 'center',
     marginBottom: 24,
     paddingHorizontal: 20,
+    fontWeight: '500',
   },
   infoBox: {
-    backgroundColor: '#1F2937',
+    backgroundColor: '#FFE500',
+    borderWidth: 3,
+    borderColor: '#000000',
     padding: 16,
-    borderRadius: 12,
     width: '100%',
+    shadowColor: '#000000',
+    shadowOffset: { width: 3, height: 3 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
   },
   infoText: {
     fontSize: 14,
-    color: '#9CA3AF',
+    color: '#000000',
     textAlign: 'center',
     lineHeight: 20,
+    fontWeight: '600',
   },
   errorText: {
-    color: '#FFFFFF',
+    color: '#000000',
     fontSize: 18,
     marginBottom: 20,
+    fontWeight: '600',
   },
   backButton: {
-    backgroundColor: '#F97316',
+    backgroundColor: '#FF6B00',
+    borderWidth: 3,
+    borderColor: '#000000',
     paddingVertical: 12,
     paddingHorizontal: 24,
-    borderRadius: 12,
+    shadowColor: '#000000',
+    shadowOffset: { width: 4, height: 4 },
+    shadowOpacity: 1,
+    shadowRadius: 0,
+    elevation: 0,
     alignSelf: 'center',
   },
   backButtonText: {
     color: '#FFFFFF',
     fontSize: 16,
-    fontWeight: '600',
+    fontWeight: '900',
+    textTransform: 'uppercase',
+    letterSpacing: 0.5,
   },
 })

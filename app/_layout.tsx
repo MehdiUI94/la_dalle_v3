@@ -3,7 +3,6 @@ import * as Linking from 'expo-linking';
 import { Stack } from 'expo-router';
 import { StatusBar } from 'expo-status-bar';
 import { useEffect } from 'react';
-import 'react-native-reanimated';
 
 import { useColorScheme } from '@/hooks/use-color-scheme';
 import { handleAuthDeepLink } from '../config/supabase';
@@ -42,23 +41,18 @@ export default function RootLayout() {
         <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
         <Stack.Screen name="login" options={{ headerShown: false }} />
         <Stack.Screen name="auth-callback" options={{ headerShown: false }} />
-        <Stack.Screen name="map" options={{ headerShown: false }} />
         <Stack.Screen 
           name="restaurant-detail" 
           options={{ 
             presentation: 'card',
-            title: 'Détails',
-            headerStyle: { backgroundColor: '#101828' },
-            headerTintColor: '#F97316',
+            headerShown: false,
           }} 
         />
         <Stack.Screen 
           name="qr-code" 
           options={{ 
             presentation: 'modal',
-            title: 'QR Code',
-            headerStyle: { backgroundColor: '#101828' },
-            headerTintColor: '#F97316',
+            headerShown: false,
           }} 
         />
       </Stack>
